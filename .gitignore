@@ -1,0 +1,6 @@
+# 規定の中身はGitHub(公開)に上げない
+データ/
+*.xlsx
+data.json
+local-data.json
+__pycache__/

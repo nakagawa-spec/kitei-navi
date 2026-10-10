@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>規定ナビ</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<style>
+:root {
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --surface-2: #eef2f0;
+  --line: #dde3e0;
+  --text: #1c2522;
+  --muted: #5d6b66;
+  --primary: #1d6b57;
+  --primary-ink: #ffffff;
+  --primary-soft: #e3f0eb;
+  --mark: #ffe58a;
+  --mark-text: #1c2522;
+  --danger: #b3261e;
+  --shadow: 0 1px 2px rgba(20,40,32,.06), 0 4px 16px rgba(20,40,32,.06);
+  --radius: 12px;
+  --c-A: #6b5bd2; --c-B: #2b7bd6; --c-C: #c0392b; --c-D: #d68910;
+  --c-E: #148f77; --c-F: #7d6608; --c-G: #af3c8f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111715; --surface: #18201d; --surface-2: #1f2925; --line: #2c3833;
+    --text: #e6ece9; --muted: #9aaba4; --primary: #5cc0a2; --primary-ink: #0d1a15;
+    --primary-soft: #1f3a31; --mark: #8a6d00; --mark-text: #fff8dc; --danger: #ff8a80;
+    --shadow: 0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111715; --surface: #18201d; --surface-2: #1f2925; --line: #2c3833;
+  --text: #e6ece9; --muted: #9aaba4; --primary: #5cc0a2; --primary-ink: #0d1a15;
+  --primary-soft: #1f3a31; --mark: #8a6d00; --mark-text: #fff8dc; --danger: #ff8a80;
+  --shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  font-size: 15px; line-height: 1.75;
+}
+button, input { font: inherit; color: inherit; }
+a { color: var(--primary); }
+mark { background: var(--mark); color: var(--mark-text); border-radius: 2px; padding: 0 1px; }
+.hidden { display: none !important; }
+
+/* ---------- 上部バー ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 20; background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-in {
+  max-width: 1120px; margin: 0 auto; padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px; color: var(--text); text-decoration: none; white-space: nowrap; }
+.brand img { width: 28px; height: 28px; }
+.top-search { flex: 1; min-width: 0; }
+.role { font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); white-space: nowrap; font-weight: 500; }
+.icon-btn {
+  border: 1px solid var(--line); background: var(--surface); border-radius: 8px;
+  padding: 6px 10px; cursor: pointer; font-size: 13px; white-space: nowrap;
+}
+.icon-btn:hover { background: var(--surface-2); }
+
+/* ---------- 検索窓 ---------- */
+.search { position: relative; display: flex; }
+.search input {
+  width: 100%; border: 1.5px solid var(--line); background: var(--surface);
+  border-radius: 999px; padding: 10px 44px 10px 18px; font-size: 16px; outline: none;
+}
+.search input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.search button {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--primary);
+  color: var(--primary-ink); cursor: pointer; display: grid; place-items: center;
+}
+.search button svg { width: 18px; height: 18px; }
+.search.big input { padding: 15px 56px 15px 22px; font-size: 17px; box-shadow: var(--shadow); border-color: transparent; }
+.search.big button { width: 46px; height: 46px; right: 5px; }
+
+/* ---------- レイアウト ---------- */
+main { max-width: 1120px; margin: 0 auto; padding: 20px 16px 48px; }
+.hero { text-align: center; padding: 28px 0 8px; }
+.hero h1 { font-size: 24px; margin: 0 0 4px; }
+.hero p { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+.hero .search { max-width: 640px; margin: 0 auto; }
+.section-title { font-size: 15px; font-weight: 700; margin: 28px 0 10px; display: flex; align-items: center; gap: 8px; }
+.section-title small { color: var(--muted); font-weight: 400; font-size: 12px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 6px 14px; cursor: pointer; font-size: 14px; line-height: 1.4;
+}
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+.chip.on { background: var(--primary); border-color: var(--primary); color: var(--primary-ink); }
+.chip .n { opacity: .7; font-size: 12px; margin-left: 4px; }
+
+.cat-head { display: flex; align-items: center; gap: 8px; margin: 26px 0 10px; font-weight: 700; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; display: inline-block; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 14px 16px; cursor: pointer; text-align: left; width: 100%; display: block;
+  transition: border-color .15s, box-shadow .15s;
+}
+.card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+.card .no { font-size: 12px; color: var(--muted); }
+.card .name { font-weight: 700; font-size: 15px; margin: 2px 0 4px; }
+.card .sum {
+  font-size: 13px; color: var(--muted); line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.card .meta { font-size: 12px; color: var(--muted); margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+.tag { font-size: 11px; padding: 0 7px; border-radius: 4px; background: var(--surface-2); color: var(--muted); }
+.tag.exec { background: #fbe9e7; color: #a33a2a; }
+:root[data-theme="dark"] .tag.exec { background: #3a211d; color: #ffb4a8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tag.exec { background: #3a211d; color: #ffb4a8; } }
+
+/* ---------- 検索結果 ---------- */
+.result-head { margin: 4px 0 12px; }
+.result-head h2 { font-size: 18px; margin: 0; }
+.result-head p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.results { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.hit .where { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.hit .title { font-weight: 700; margin: 2px 0 4px; }
+.hit .snip { font-size: 14px; color: var(--text); line-height: 1.7; word-break: break-all; }
+.hit .snip .ell { color: var(--muted); }
+.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+.more-btn { margin: 14px auto 0; display: block; }
+
+/* ---------- 規定の本文 ---------- */
+.back { border: 0; background: none; color: var(--primary); cursor: pointer; padding: 4px 0; font-size: 14px; }
+.reader { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: start; }
+.toc {
+  position: sticky; top: 72px; max-height: calc(100vh - 90px); overflow: auto;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 8px;
+  font-size: 13px;
+}
+.toc .ch { font-weight: 700; color: var(--muted); font-size: 12px; padding: 8px 8px 2px; }
+.toc a { display: block; padding: 3px 8px; border-radius: 6px; color: var(--text); text-decoration: none; line-height: 1.5; }
+.toc a:hover { background: var(--surface-2); }
+.toc a.on { background: var(--primary-soft); color: var(--primary); font-weight: 500; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px; min-width: 0; }
+.doc-head { border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 8px; }
+.doc-head h1 { font-size: 22px; margin: 4px 0; }
+.doc-head .sum { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+.doc-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.chapter { font-size: 16px; font-weight: 700; margin: 28px 0 4px; padding: 6px 12px; background: var(--surface-2); border-radius: 8px; }
+.art { padding: 12px 12px; margin: 0 -12px; border-radius: 10px; scroll-margin-top: 80px; position: relative; }
+.art.target { background: var(--primary-soft); }
+.art h3 { font-size: 15px; margin: 0 0 4px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.art h3 .num { color: var(--primary); }
+.art .line { margin: 0; white-space: pre-wrap; word-break: break-word; }
+.art .line.item { padding-left: 1.5em; text-indent: -1.5em; }
+.art .copy { position: absolute; right: 8px; top: 10px; opacity: 0; font-size: 12px; padding: 2px 8px; }
+.art:hover .copy, .art.target .copy { opacity: 1; }
+.mini-table-wrap { overflow-x: auto; margin: 6px 0; }
+table.mini { border-collapse: collapse; font-size: 13px; }
+table.mini td { border: 1px solid var(--line); padding: 4px 8px; vertical-align: top; min-width: 3em; }
+.toc-toggle { display: none; }
+
+/* ---------- 表(Excel) ---------- */
+.sheet-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
+.xl-wrap { overflow: auto; max-height: calc(100vh - 230px); border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table.xl { border-collapse: collapse; font-size: 13px; }
+table.xl td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 5px 9px; vertical-align: top; white-space: nowrap; }
+table.xl td.long { white-space: pre-wrap; min-width: 16em; max-width: 380px; }
+table.xl tr.rowhit td { background: var(--primary-soft); }
+table.xl td.rn { color: var(--muted); font-size: 11px; background: var(--surface-2); position: sticky; left: 0; text-align: right; }
+.xl-filter { max-width: 360px; margin-bottom: 10px; }
+
+/* ---------- ログイン ---------- */
+.login { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+.login-card { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 32px 28px; width: 100%; max-width: 400px; border: 1px solid var(--line); }
+.login-card .brand { justify-content: center; font-size: 22px; margin-bottom: 4px; }
+.login-card .brand img { width: 36px; height: 36px; }
+.login-card p.lead { text-align: center; color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+.field { width: 100%; border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 16px; background: var(--surface); outline: none; }
+.field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.btn { width: 100%; border: 0; border-radius: 10px; padding: 12px; background: var(--primary); color: var(--primary-ink); font-weight: 700; cursor: pointer; margin-top: 12px; font-size: 15px; }
+.btn:disabled { opacity: .6; cursor: default; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 12px; }
+.err { color: var(--danger); font-size: 13px; margin-top: 10px; min-height: 1.4em; }
+
+footer { max-width: 1120px; margin: 0 auto; padding: 16px 16px 32px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #24302c; color: #fff; padding: 8px 18px; border-radius: 999px; font-size: 13px; z-index: 50; }
+
+/* ---------- スマホ ---------- */
+@media (max-width: 760px) {
+  .topbar-in { flex-wrap: wrap; gap: 8px; }
+  .top-search { order: 3; flex-basis: 100%; }
+  .role { margin-left: auto; }
+  .art { scroll-margin-top: 130px; }
+  .hero { padding-top: 12px; }
+  .hero h1 { font-size: 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .reader { grid-template-columns: 1fr; }
+  .toc { display: none; position: static; max-height: 60vh; }
+  .toc.open { display: block; }
+  .toc-toggle { display: inline-block; }
+  .doc { padding: 18px 16px; }
+  .doc-head h1 { font-size: 19px; }
+  .art .copy { opacity: 1; position: static; display: inline-block; margin-top: 4px; }
+  .xl-wrap { max-height: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ログイン -->
+<div id="login" class="login hidden">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <div class="brand"><img src="favicon.svg" alt="">規定ナビ</div>
+    <p class="lead">株式会社ヘルシーホームの社内規定を検索できます</p>
+    <input id="pass" class="field" type="password" placeholder="合言葉を入力" autocomplete="current-password" required>
+    <label class="check"><input type="checkbox" id="remember" checked>この端末で合言葉を記憶する</label>
+    <button class="btn" id="loginBtn" type="submit">はじめる</button>
+    <div class="err" id="loginErr"></div>
+  </form>
+</div>
+
+<!-- 本体 -->
+<div id="app" class="hidden">
+  <header class="topbar">
+    <div class="topbar-in">
+      <a class="brand" href="#/"><img src="favicon.svg" alt=""><span>規定ナビ</span></a>
+      <form class="top-search search" id="topSearch">
+        <input type="search" id="topQ" placeholder="規定を検索（例：有給休暇　交通費）" enterkeyhint="search">
+        <button type="submit" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+      </form>
+      <span class="role" id="roleBadge"></span>
+      <button class="icon-btn" id="logout" type="button">ログアウト</button>
+    </div>
+  </header>
+  <main id="view"></main>
+  <footer>
+    <div>このページは社内規定を探しやすくするためのものです。正式な内容は各規定の原本によります。内容についての質問は所管部署へお問い合わせください。</div>
+    <div id="footInfo"></div>
+  </footer>
+</div>
+
+<div id="loading" class="login"><div class="login-card" style="text-align:center"><div class="brand"><img src="favicon.svg" alt="">規定ナビ</div><p class="lead" id="loadingMsg">読み込んでいます…</p></div></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var API = (window.KITEI_CONFIG && window.KITEI_CONFIG.apiUrl) || '';
+  var PASS_KEY = 'kitei-navi-pass';
+  var PAGE = 30;
+
+  var CAT_COLORS = { A: 'var(--c-A)', B: 'var(--c-B)', C: 'var(--c-C)', D: 'var(--c-D)', E: 'var(--c-E)', F: 'var(--c-F)', G: 'var(--c-G)' };
+
+  var S = {
+    role: '', version: '',
+    regs: [], regById: {},
+    sections: [], secByReg: {},
+    tables: {},        // regId -> { sheets: [name], rows: { sheet: [[cells]] } }
+    tableRows: [],     // 検索用 { reg, sheet, row, text }
+    synonyms: {}, faq: []
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ------------------------------------------------------------ 通信
+
+  function api(action, pass) {
+    return fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: action, pass: pass })
+    }).then(function (r) { return r.json(); });
+  }
+
+  function getSaved() { try { return localStorage.getItem(PASS_KEY) || ''; } catch (e) { return ''; } }
+  function setSaved(v) { try { v ? localStorage.setItem(PASS_KEY, v) : localStorage.removeItem(PASS_KEY); } catch (e) {} }
+
+  function start() {
+    if (!API) {
+      $('loadingMsg').textContent = 'config.js に GAS の URL が設定されていません。';
+      return;
+    }
+    var saved = getSaved();
+    if (saved) login(saved, true);
+    else showLogin('');
+  }
+
+  function showLogin(msg) {
+    $('loading').classList.add('hidden');
+    $('app').classList.add('hidden');
+    $('login').classList.remove('hidden');
+    $('loginErr').textContent = msg || '';
+    $('loginBtn').disabled = false;
+    $('loginBtn').textContent = 'はじめる';
+    setTimeout(function () { $('pass').focus(); }, 50);
+  }
+
+  function login(pass, auto) {
+    $('loginBtn').disabled = true;
+    $('loginBtn').textContent = '読み込んでいます…';
+    api('load', pass).then(function (res) {
+      if (!res.ok) {
+        if (auto) setSaved('');
+        showLogin(auto ? '' : res.error);
+        return;
+      }
+      if (!auto) setSaved($('remember').checked ? pass : '');
+      ingest(res);
+      $('loading').classList.add('hidden');
+      $('login').classList.add('hidden');
+      $('app').classList.remove('hidden');
+      $('pass').value = '';
+      route();
+    }).catch(function () {
+      showLogin('通信できませんでした。電波の良いところでもう一度お試しください。');
+    });
+  }
+
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = $('pass').value.trim();
+    if (p) login(p, false);
+  });
+  $('logout').addEventListener('click', function () {
+    setSaved('');
+    S.regs = []; S.sections = []; S.tables = {}; S.tableRows = [];
+    location.hash = '';
+    showLogin('ログアウトしました');
+  });
+
+  // ------------------------------------------------------------ データの取り込み
+
+  function ingest(res) {
+    S.role = res.role;
+    S.version = res.version;
+    S.regs = res.regs;
+    S.regById = {};
+    S.regs.forEach(function (r) { S.regById[r.id] = r; r.count = 0; });
+    S.sections = [];
+    S.secByReg = {};
+    res.sections.forEach(function (v) {
+      var s = { reg: v[0], seq: v[1], chapter: v[2], article: v[3], title: v[4], body: v[5] };
+      if (!S.regById[s.reg]) return;
+      S.sections.push(s);
+      (S.secByReg[s.reg] = S.secByReg[s.reg] || []).push(s);
+      if (s.article) S.regById[s.reg].count++;
+    });
+    Object.keys(S.secByReg).forEach(function (k) { S.secByReg[k].sort(function (a, b) { return a.seq - b.seq; }); });
+    S.tables = {};
+    S.tableRows = [];
+    res.tables.forEach(function (v) {
+      var reg = v[0], sheet = v[1], row = v[2], cells;
+      try { cells = JSON.parse(v[3]); } catch (e) { cells = [String(v[3])]; }
+      var t = S.tables[reg] = S.tables[reg] || { sheets: [], rows: {} };
+      if (!t.rows[sheet]) { t.rows[sheet] = []; t.sheets.push(sheet); }
+      t.rows[sheet].push(cells);
+      S.tableRows.push({ reg: reg, sheet: sheet, row: row, cells: cells, text: cells.join(' ') });
+    });
+    S.synonyms = {};
+    (res.synonyms || []).forEach(function (s) {
+      var key = norm(s.word);
+      var alts = String(s.alts || '').split(/[,、，]/).map(function (x) { return x.trim(); }).filter(Boolean);
+      S.synonyms[key] = (S.synonyms[key] || []).concat(alts);
+    });
+    S.faq = res.faq || [];
+    $('roleBadge').textContent = S.role === '役員' ? '役員向け' : '一般向け';
+    $('footInfo').textContent = '収録：' + S.regs.length + '件の規定' + (S.version ? '　／　データ作成日：' + S.version : '');
+  }
+
+  // ------------------------------------------------------------ 検索
+
+  function norm(s) {
+    return String(s || '').normalize('NFKC').toLowerCase().replace(/[\s　]/g, '')
+      .replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); });
+  }
+
+  function escRe(c) { return c.replace(/[.*+?^${}()|[\]\\\/-]/g, '\\$&'); }
+
+  /** 全角半角・ひらがなカタカナ・途中の空白の違いを吸収する正規表現の部品 */
+  function fuzzyPattern(term) {
+    var t = term.normalize('NFKC');
+    var parts = [];
+    for (var i = 0; i < t.length; i++) {
+      var c = t[i];
+      if (/\s/.test(c)) continue;
+      var v = [c];
+      var code = c.charCodeAt(0);
+      if (code >= 0x21 && code <= 0x7e) v.push(String.fromCharCode(code + 0xfee0));
+      if (/[a-z]/i.test(c)) {
+        var o = c === c.toLowerCase() ? c.toUpperCase() : c.toLowerCase();
+        v.push(o, String.fromCharCode(o.charCodeAt(0) + 0xfee0));
+      }
+      if (code >= 0x3041 && code <= 0x3096) v.push(String.fromCharCode(code + 0x60));
+      if (code >= 0x30a1 && code <= 0x30f6) v.push(String.fromCharCode(code - 0x60));
+      if (c === '(' || c === ')') v.push(c === '(' ? '（' : '）');
+      parts.push(v.length > 1 ? '(?:' + v.map(escRe).join('|') + ')' : escRe(c));
+    }
+    return parts.join('[\\s\\u3000]*');
+  }
+
+  /** 検索語 → [{ term, alts:[...], re }]  (語どうしはAND、言い換えはOR) */
+  function parseQuery(q) {
+    var terms = String(q || '').trim().split(/[\s　]+/).filter(Boolean).slice(0, 6);
+    return terms.map(function (t) {
+      var alts = [t];
+      var syn = S.synonyms[norm(t)] || [];
+      syn.forEach(function (a) { if (alts.map(norm).indexOf(norm(a)) < 0) alts.push(a); });
+      var pats = alts.map(fuzzyPattern).filter(Boolean);
+      return {
+        term: t, alts: alts,
+        re: new RegExp(pats.join('|'), 'g'), one: new RegExp(pats.join('|')),
+        exact: new RegExp(fuzzyPattern(t))
+      };
+    }).filter(function (x) { return x.alts.length; });
+  }
+
+  function countMatches(re, text) {
+    if (!text) return 0;
+    re.lastIndex = 0;
+    var n = 0;
+    while (re.exec(text) && n < 20) n++;
+    return n;
+  }
+
+  function search(q) {
+    var terms = parseQuery(q);
+    if (!terms.length) return { terms: terms, hits: [] };
+    var hits = [];
+    S.sections.forEach(function (s) {
+      var reg = S.regById[s.reg];
+      var head = (s.article || '') + ' ' + (s.title || '');
+      var score = 0;
+      for (var i = 0; i < terms.length; i++) {
+        var t = terms[i];
+        var inHead = t.one.test(head) ? 1 : 0;
+        var inReg = t.one.test(reg.name) ? 1 : 0;
+        var inCh = t.one.test(s.chapter || '') ? 1 : 0;
+        var nBody = countMatches(t.re, s.body);
+        if (!inHead && !inReg && !inCh && !nBody) return;
+        score += inHead * 30 + inReg * 6 + inCh * 4 + Math.min(nBody, 8) * 3;
+        if (t.exact.test(head)) score += 10;
+      }
+      hits.push({ type: 'sec', s: s, reg: reg, score: score });
+    });
+    S.tableRows.forEach(function (r) {
+      var reg = S.regById[r.reg];
+      var score = 0;
+      for (var i = 0; i < terms.length; i++) {
+        var n = countMatches(terms[i].re, r.text);
+        if (!n) return;
+        score += n * 2;
+      }
+      hits.push({ type: 'row', r: r, reg: reg, score: score });
+    });
+    hits.sort(function (a, b) {
+      return b.score - a.score || (a.type === b.type ? 0 : a.type === 'sec' ? -1 : 1);
+    });
+    return { terms: terms, hits: hits };
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function highlight(text, terms) {
+    if (!terms || !terms.length) return esc(text);
+    var re = new RegExp(terms.map(function (t) { return t.re.source; }).join('|'), 'g');
+    var out = '', last = 0, m;
+    while ((m = re.exec(text))) {
+      if (!m[0].length) { re.lastIndex++; continue; }
+      out += esc(text.slice(last, m.index)) + '<mark>' + esc(m[0]) + '</mark>';
+      last = m.index + m[0].length;
+    }
+    return out + esc(text.slice(last));
+  }
+
+  function snippet(text, terms, len) {
+    len = len || 120;
+    var flat = String(text || '').replace(/｜/g, ' ').replace(/\n+/g, ' ');
+    var pos = -1;
+    for (var i = 0; i < terms.length && pos < 0; i++) {
+      terms[i].re.lastIndex = 0;
+      var m = terms[i].re.exec(flat);
+      if (m) pos = m.index;
+    }
+    if (pos < 0) pos = 0;
+    var from = Math.max(0, pos - 40);
+    var part = flat.slice(from, from + len);
+    return (from > 0 ? '<span class="ell">…</span>' : '') + highlight(part, terms) +
+      (from + len < flat.length ? '<span class="ell">…</span>' : '');
+  }
+
+  // ------------------------------------------------------------ 画面の切り替え
+
+  function parseHash() {
+    var h = location.hash.replace(/^#/, '') || '/';
+    var qi = h.indexOf('?');
+    var path = qi >= 0 ? h.slice(0, qi) : h;
+    var params = {};
+    if (qi >= 0) h.slice(qi + 1).split('&').forEach(function (kv) {
+      var p = kv.split('=');
+      if (p[0]) params[decodeURIComponent(p[0])] = decodeURIComponent((p[1] || '').replace(/\+/g, ' '));
+    });
+    return { parts: path.split('/').filter(Boolean), params: params };
+  }
+
+  function go(hash) { location.hash = hash; }
+
+  function route() {
+    if (!S.regs.length) return;
+    var h = parseHash();
+    var p = h.parts;
+    $('topQ').value = h.params.q || '';
+    if (p[0] === 'search') renderSearch(h.params.q || '', h.params.reg || '');
+    else if (p[0] === 'reg' && S.regById[p[1]]) {
+      if (S.regById[p[1]].kind === '表') renderTable(p[1], h.params);
+      else renderReg(p[1], h.params);
+    }
+    else renderHome();
+  }
+  window.addEventListener('hashchange', route);
+
+  function searchHash(q, reg) {
+    return '#/search?q=' + encodeURIComponent(q) + (reg ? '&reg=' + encodeURIComponent(reg) : '');
+  }
+
+  $('topSearch').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var q = $('topQ').value.trim();
+    if (q) go(searchHash(q));
+    $('topQ').blur();
+  });
+
+  var SEARCH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>';
+
+  function catColor(cat) { return CAT_COLORS[(cat || '').charAt(0)] || 'var(--muted)'; }
+
+  // ---------- ホーム
+  function renderHome() {
+    document.title = '規定ナビ';
+    $('topSearch').classList.add('hidden');
+    var html = '';
+    html += '<section class="hero"><h1>社内規定を探す</h1><p>キーワードで、' + S.regs.length + '件の規定の中から該当する条文を探せます</p>' +
+      '<form class="search big" id="heroSearch"><input type="search" id="heroQ" placeholder="例：有給休暇、交通費" enterkeyhint="search">' +
+      '<button type="submit" aria-label="検索">' + SEARCH_ICON + '</button></form></section>';
+    if (S.faq.length) {
+      html += '<div class="section-title">よくある質問から探す</div><div class="chips">' +
+        S.faq.map(function (f) {
+          return '<button class="chip" data-q="' + esc(f.query) + '">' + esc(f.label) + '</button>';
+        }).join('') + '</div>';
+    }
+    html += '<div class="section-title">規定の一覧 <small>押すと全文が読めます</small></div>';
+    var cats = [];
+    S.regs.forEach(function (r) { if (cats.indexOf(r.category) < 0) cats.push(r.category); });
+    cats.forEach(function (c) {
+      var list = S.regs.filter(function (r) { return r.category === c; });
+      html += '<div class="cat-head"><span class="dot" style="background:' + catColor(c) + '"></span>' + esc(c || 'その他') +
+        '<small style="color:var(--muted);font-weight:400">' + list.length + '件</small></div><div class="grid">' +
+        list.map(regCard).join('') + '</div>';
+    });
+    $('view').innerHTML = html;
+    $('heroSearch').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = $('heroQ').value.trim();
+      if (q) go(searchHash(q));
+    });
+    bindCommon();
+    window.scrollTo(0, 0);
+  }
+
+  function regCard(r) {
+    var meta = [];
+    if (r.kind === '表') meta.push('<span class="tag">一覧表</span>');
+    else if (r.count) meta.push('全' + r.count + '条');
+    if (r.dept) meta.push('所管：' + esc(r.dept));
+    if (S.role === '役員' && r.scope !== '一般') meta.push('<span class="tag exec">役員のみ</span>');
+    return '<a class="card" href="#/reg/' + encodeURIComponent(r.id) + '" style="text-decoration:none;color:inherit">' +
+      '<div class="no">No.' + esc(r.no) + '</div><div class="name">' + esc(r.name) + '</div>' +
+      (r.summary ? '<div class="sum">' + esc(r.summary) + '</div>' : '') +
+      '<div class="meta">' + meta.join('<span>・</span>') + '</div></a>';
+  }
+
+  function bindCommon() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function (b) {
+      b.addEventListener('click', function () { go(searchHash(b.getAttribute('data-q'))); });
+    });
+  }
+
+  // ---------- 検索結果
+  var shown = PAGE;
+  var lastQ = '';
+  function renderSearch(q, regFilter) {
+    document.title = q + ' - 規定ナビ';
+    $('topSearch').classList.remove('hidden');
+    if (q + '|' + regFilter !== lastQ) { shown = PAGE; lastQ = q + '|' + regFilter; }
+    var res = search(q);
+    var hits = res.hits;
+    var counts = {};
+    hits.forEach(function (h) { counts[h.reg.id] = (counts[h.reg.id] || 0) + 1; });
+    var filtered = regFilter ? hits.filter(function (h) { return h.reg.id === regFilter; }) : hits;
+
+    var expanded = [];
+    res.terms.forEach(function (t) { if (t.alts.length > 1) expanded.push('「' + t.term + '」→ ' + t.alts.slice(1).join('・')); });
+
+    var html = '<div class="result-head"><h2>「' + esc(q) + '」の検索結果　' + hits.length + '件</h2>' +
+      (expanded.length ? '<p>言い換えも含めて探しています：' + esc(expanded.join('　')) + '</p>' : '') + '</div>';
+
+    var regIds = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+    if (regIds.length > 1) {
+      html += '<div class="chips"><button class="chip' + (regFilter ? '' : ' on') + '" data-filter="">すべて<span class="n">' + hits.length + '</span></button>' +
+        regIds.map(function (id) {
+          return '<button class="chip' + (regFilter === id ? ' on' : '') + '" data-filter="' + esc(id) + '">' + esc(S.regById[id].name) + '<span class="n">' + counts[id] + '</span></button>';
+        }).join('') + '</div>';
+    }
+
+    if (!hits.length) {
+      html += '<div class="empty">見つかりませんでした。<br>言葉を短くするか、別の言い方で探してみてください。<br><small>例：「有給休暇の申請方法」→「有給」</small></div>';
+    } else {
+      html += '<div class="results">' + filtered.slice(0, shown).map(function (h) { return hitCard(h, res.terms, q); }).join('') + '</div>';
+      if (filtered.length > shown) html += '<button class="icon-btn more-btn" id="more">さらに表示（残り' + (filtered.length - shown) + '件）</button>';
+    }
+    $('view').innerHTML = html;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-filter]'), function (b) {
+      b.addEventListener('click', function () { go(searchHash(q, b.getAttribute('data-filter'))); });
+    });
+    if ($('more')) $('more').addEventListener('click', function () { shown += PAGE; renderSearch(q, regFilter); });
+    if (shown === PAGE) window.scrollTo(0, 0);
+  }
+
+  function hitCard(h, terms, q) {
+    var reg = h.reg;
+    var where = '<span class="dot" style="background:' + catColor(reg.category) + '"></span>' + esc(reg.name);
+    if (h.type === 'sec') {
+      var s = h.s;
+      var title = [s.article, s.title ? '（' + s.title + '）' : ''].join('') || s.chapter || '本文';
+      if (s.chapter) where += '<span>›</span>' + esc(s.chapter);
+      return '<a class="card hit" style="text-decoration:none;color:inherit" href="#/reg/' + encodeURIComponent(reg.id) + '?s=' + s.seq + '&q=' + encodeURIComponent(q) + '">' +
+        '<div class="where">' + where + '</div><div class="title">' + highlight(title, terms) + '</div>' +
+        '<div class="snip">' + snippet(s.body, terms) + '</div></a>';
+    }
+    var r = h.r;
+    where += '<span>›</span>' + esc(r.sheet);
+    return '<a class="card hit" style="text-decoration:none;color:inherit" href="#/reg/' + encodeURIComponent(reg.id) + '?sheet=' + encodeURIComponent(r.sheet) + '&row=' + r.row + '&q=' + encodeURIComponent(q) + '">' +
+      '<div class="where">' + where + '<span class="tag">一覧表 ' + r.row + '行目</span></div>' +
+      '<div class="snip">' + highlight(r.cells.filter(Boolean).join('　｜　'), terms) + '</div></a>';
+  }
+
+  // ---------- 規定の全文
+  function renderReg(id, params) {
+    var reg = S.regById[id];
+    var secs = S.secByReg[id] || [];
+    var terms = params.q ? parseQuery(params.q) : [];
+    document.title = reg.name + ' - 規定ナビ';
+    $('topSearch').classList.remove('hidden');
+
+    var toc = '', body = '', ch = null;
+    secs.forEach(function (s) {
+      if (s.chapter !== ch) {
+        ch = s.chapter;
+        if (ch) {
+          toc += '<div class="ch">' + esc(ch) + '</div>';
+          body += '<div class="chapter">' + esc(ch) + '</div>';
+        }
+      }
+      var label = (s.article || '') + (s.title ? '（' + s.title + '）' : '');
+      toc += '<a href="#/reg/' + encodeURIComponent(id) + '?s=' + s.seq + (params.q ? '&q=' + encodeURIComponent(params.q) : '') + '" data-s="' + s.seq + '">' + esc(label || '本文') + '</a>';
+      body += '<article class="art" id="s-' + s.seq + '">' +
+        (label ? '<h3>' + (s.article ? '<span class="num">' + esc(s.article) + '</span>' : '') + (s.title ? '<span>' + highlight(s.title, terms) + '</span>' : '') + '</h3>' : '') +
+        renderBody(s.body, terms) +
+        '<button class="icon-btn copy" data-copy="' + s.seq + '">この条のリンクをコピー</button></article>';
+    });
+
+    var tools = '<div class="doc-tools">' +
+      '<button class="icon-btn toc-toggle" id="tocToggle">目次を開く</button>' +
+      (terms.length ? '<button class="icon-btn" id="clearHl">「' + esc(params.q) + '」の色付けを消す</button><button class="icon-btn" data-back-search="1">検索結果に戻る</button>' : '') +
+      '</div>';
+
+    $('view').innerHTML =
+      '<button class="back" onclick="history.length > 1 ? history.back() : (location.hash = \'#/\')">‹ 戻る</button>' +
+      '<div class="reader"><nav class="toc" id="toc">' + toc + '</nav>' +
+      '<div class="doc"><div class="doc-head"><div class="no" style="font-size:12px;color:var(--muted)">' +
+      '<span class="dot" style="background:' + catColor(reg.category) + '"></span> ' + esc(reg.category) + '　No.' + esc(reg.no) +
+      (reg.dept ? '　所管：' + esc(reg.dept) : '') + '</div><h1>' + esc(reg.name) + '</h1>' +
+      (reg.summary ? '<p class="sum">' + esc(reg.summary) + '</p>' : '') + tools + '</div>' + body + '</div></div>';
+
+    if ($('tocToggle')) $('tocToggle').addEventListener('click', function () {
+      var open = $('toc').classList.toggle('open');
+      this.textContent = open ? '目次を閉じる' : '目次を開く';
+    });
+    if ($('clearHl')) $('clearHl').addEventListener('click', function () {
+      go('#/reg/' + encodeURIComponent(id) + (params.s ? '?s=' + params.s : ''));
+    });
+    var bs = document.querySelector('[data-back-search]');
+    if (bs) bs.addEventListener('click', function () { go(searchHash(params.q)); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (b) {
+      b.addEventListener('click', function () {
+        var url = location.href.split('#')[0] + '#/reg/' + encodeURIComponent(id) + '?s=' + b.getAttribute('data-copy');
+        copyText(url);
+      });
+    });
+
+    var target = params.s ? $('s-' + params.s) : null;
+    if (target) {
+      target.classList.add('target');
+      var a = document.querySelector('.toc a[data-s="' + params.s + '"]');
+      if (a) a.classList.add('on');
+      setTimeout(function () { target.scrollIntoView({ block: 'start' }); if (a) a.scrollIntoView({ block: 'nearest' }); }, 0);
+      $('toc').classList.remove('open');
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function renderBody(text, terms) {
+    var lines = String(text || '').split('\n');
+    var out = '', tbl = [];
+    function flush() {
+      if (!tbl.length) return;
+      out += '<div class="mini-table-wrap"><table class="mini">' + tbl.map(function (l) {
+        var cells = l.replace(/^｜|｜$/g, '').split('｜');
+        return '<tr>' + cells.map(function (c) { return '<td>' + highlight(c, terms) + '</td>'; }).join('') + '</tr>';
+      }).join('') + '</table></div>';
+      tbl = [];
+    }
+    lines.forEach(function (l) {
+      if (/^｜.*｜$/.test(l)) { tbl.push(l); return; }
+      flush();
+      var item = /^(\(|（)?[0-9０-９一二三四五六七八九十①-⑳ア-ンa-zA-Z]{1,3}(\)|）|\.|．)?　/.test(l) || /^・/.test(l);
+      out += '<p class="line' + (item ? ' item' : '') + '">' + highlight(l, terms) + '</p>';
+    });
+    flush();
+    return out;
+  }
+
+  // ---------- 一覧表(Excel)
+  function renderTable(id, params) {
+    var reg = S.regById[id];
+    var t = S.tables[id] || { sheets: [], rows: {} };
+    var sheet = params.sheet && t.rows[params.sheet] ? params.sheet : t.sheets[0];
+    var terms = params.q ? parseQuery(params.q) : [];
+    document.title = reg.name + ' - 規定ナビ';
+    $('topSearch').classList.remove('hidden');
+
+    var html = '<button class="back" onclick="history.length > 1 ? history.back() : (location.hash = \'#/\')">‹ 戻る</button>' +
+      '<div class="doc"><div class="doc-head"><div class="no" style="font-size:12px;color:var(--muted)"><span class="dot" style="background:' + catColor(reg.category) + '"></span> ' +
+      esc(reg.category) + '　No.' + esc(reg.no) + '</div><h1>' + esc(reg.name) + '</h1>' +
+      (reg.summary ? '<p class="sum">' + esc(reg.summary) + '</p>' : '') + '</div>';
+    if (t.sheets.length > 1) {
+      html += '<div class="sheet-tabs">' + t.sheets.map(function (s) {
+        return '<button class="chip' + (s === sheet ? ' on' : '') + '" data-sheet="' + esc(s) + '">' + esc(s) + '</button>';
+      }).join('') + '</div>';
+    }
+    html += '<div class="search xl-filter"><input type="search" id="xlFilter" placeholder="この表の中を絞り込む" value="' + esc(params.q || '') + '"></div>' +
+      '<div class="xl-wrap"><table class="xl" id="xl"></table></div></div>';
+    $('view').innerHTML = html;
+
+    var rows = t.rows[sheet] || [];
+    var hitRow = Number(params.row || 0);
+    function draw(filter) {
+      var ft = filter ? parseQuery(filter) : [];
+      var out = '';
+      rows.forEach(function (cells, i) {
+        var n = i + 1;
+        if (ft.length) {
+          var text = cells.join(' ');
+          for (var k = 0; k < ft.length; k++) { if (!ft[k].one.test(text)) return; }
+        }
+        out += '<tr id="row-' + n + '"' + (n === hitRow ? ' class="rowhit"' : '') + '><td class="rn">' + n + '</td>' +
+          cells.map(function (c) { return '<td' + (c.length > 14 ? ' class="long"' : '') + '>' + highlight(c, ft) + '</td>'; }).join('') + '</tr>';
+      });
+      $('xl').innerHTML = out || '<tr><td style="padding:16px">該当する行がありません</td></tr>';
+    }
+    draw(hitRow ? '' : params.q || '');
+    if (hitRow) $('xlFilter').value = '';
+    var timer;
+    $('xlFilter').addEventListener('input', function () {
+      clearTimeout(timer);
+      var v = this.value;
+      timer = setTimeout(function () { hitRow = 0; draw(v.trim()); }, 200);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sheet]'), function (b) {
+      b.addEventListener('click', function () { go('#/reg/' + encodeURIComponent(id) + '?sheet=' + encodeURIComponent(b.getAttribute('data-sheet'))); });
+    });
+    var tr = hitRow ? $('row-' + hitRow) : null;
+    if (tr) setTimeout(function () { tr.scrollIntoView({ block: 'center' }); }, 0);
+    else window.scrollTo(0, 0);
+  }
+
+  // ------------------------------------------------------------ その他
+
+  function copyText(s) {
+    function done() { toast('リンクをコピーしました'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(s).then(done, function () { fallback(); });
+    } else fallback();
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = s; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { prompt('コピーしてください', s); }
+      document.body.removeChild(ta);
+    }
+  }
+
+  var toastTimer;
+  function toast(msg) {
+    var el = document.querySelector('.toast') || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'toast' }));
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.add('hidden'); }, 1800);
+  }
+
+  start();
+})();
+</script>
+</body>
+</html>
